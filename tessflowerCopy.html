@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hikayat Lily - Paduka Raja</title>
+    <title>Lily & Love Celebration - Birthdayyy!!!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff5f8; font-family: 'Poppins', sans-serif; touch-action: none; }
@@ -21,7 +21,7 @@
             backdrop-filter: blur(10px);
         }
 
-        /* STYLING FOTO BULAT PADUKA RAJA */
+        /* STYLING FOTO BULAT */
         .photo-wrap { 
             width: 120px; 
             height: 120px; 
@@ -78,9 +78,9 @@
     </div>
 
     <script>
-        // --- KONFIGURASI PADUKA RAJA ---
-        // MASUKKAN LINK FOTO PADUKA DI ANTARA TANDA KUTIP DI BAWAH INI
-        const linkFotoPaduka = "https://drive.google.com/file/d/1ouHB1UwKJDYhYy2O68BeJQl7twmPdkJZ/view?usp=sharing"; 
+        // --- KONFIGURASI ---
+        // MASUKKAN LINK FOTO DI ANTARA TANDA KUTIP DI BAWAH INI
+        const linkFoto = "https://drive.google.com/file/d/1ouHB1UwKJDYhYy2O68BeJQl7twmPdkJZ/view?usp=sharing"; 
 
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -103,8 +103,8 @@
         ];
 
         // Logika Pemuatan Foto
-        if (linkFotoPaduka !== "") {
-            fotoUtama.src = linkFotoPaduka;
+        if (linkFoto !== "") {
+            fotoUtama.src = linkFoto;
             fotoUtama.onload = () => { fallback.style.display = "none"; };
             fotoUtama.onerror = () => { 
                 console.log("Link foto bermasalah, menggunakan fallback");
@@ -143,7 +143,7 @@
             const rect = nextBtn.getBoundingClientRect();
             createExplosion(rect.left + rect.width / 2, rect.top + rect.height / 2);
             setTimeout(() => createExplosion(Math.random()*canvas.width, Math.random()*canvas.height*0.5), 200);
-            nextBtn.innerText = "YAY! 🎆";
+            nextBtn.innerText = "YEAYYYYY!! 🎆";
         }
 
         nextBtn.onclick = nextStep;
