@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lily & Love Celebration - Princess Birthdayyy!!</title>
+    <title>Hikayat Lily - Paduka Raja</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff5f8; font-family: 'Poppins', sans-serif; touch-action: none; }
@@ -11,20 +11,38 @@
         .container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; z-index: 10; }
         
         .card { 
-            background: rgba(255, 255, 255, 0.95); 
+            background: rgba(255, 255, 255, 0.98); 
             padding: 30px; 
             border-radius: 30px; 
             box-shadow: 0 15px 50px rgba(255, 77, 109, 0.2); 
             text-align: center; 
-            width: 300px; 
+            width: 280px; 
             border: 2px solid #ffcad4; 
             backdrop-filter: blur(10px);
-            transition: all 0.8s ease;
         }
 
-        .photo-container { width: 110px; height: 110px; margin: 0 auto 15px auto; border-radius: 50%; border: 4px solid #ff9a9e; overflow: hidden; display: none; }
-        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        /* STYLING FOTO BULAT PADUKA RAJA */
+        .photo-wrap { 
+            width: 120px; 
+            height: 120px; 
+            margin: 0 auto 15px auto; 
+            border-radius: 50%; 
+            border: 4px solid #ff9a9e; 
+            overflow: hidden; 
+            display: none; /* Akan muncul di akhir alur */
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            background: #fff;
+            position: relative;
+        }
+
+        .photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
         
+        /* Fallback jika foto belum diganti */
+        .photo-fallback {
+            font-size: 60px;
+            line-height: 120px;
+        }
+
         h1 { font-family: 'Dancing Script', cursive; color: #ff4d6d; margin: 0; font-size: 30px; display: none; }
         #typewriter { color: #888; font-size: 14px; min-height: 60px; margin: 20px 0; line-height: 1.6; }
         
@@ -35,8 +53,6 @@
             cursor: pointer !important; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.3); 
             z-index: 9999; -webkit-tap-highlight-color: transparent; 
         }
-
-        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -49,19 +65,23 @@
 
     <div class="container">
         <div class="card" id="mainCard">
-            <h1 id="mainTitle">Special for Princess 🌸</h1>
-
-            <!-- FIX BAGIAN GAMBAR -->
-            <div class="photo-container" id="photoBox">
-                <img src="https://i.ibb.co.com/WYYb2y1/Whats-App-Image-2026-04-06-at-7-38-46-PM.jpg" alt="Surprise">
+            <h1 id="mainTitle">Special for You 💞</h1>
+            
+            <div class="photo-wrap" id="photoBox">
+                <img src="" id="fotoUtama" alt="">
+                <div id="fallback" class="photo-fallback">⚜️</div>
             </div>
-
+            
             <div id="typewriter"></div>
             <button id="nextBtn" class="btn-action">Lanjut ✨</button>
         </div>
     </div>
 
     <script>
+        // --- KONFIGURASI PADUKA RAJA ---
+        // MASUKKAN LINK FOTO PADUKA DI ANTARA TANDA KUTIP DI BAWAH INI
+        const linkFotoPaduka = ""; 
+
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const nextBtn = document.getElementById('nextBtn');
@@ -69,16 +89,29 @@
         const textElement = document.getElementById('typewriter');
         const photoBox = document.getElementById('photoBox');
         const mainTitle = document.getElementById('mainTitle');
+        const fotoUtama = document.getElementById('fotoUtama');
+        const fallback = document.getElementById('fallback');
         
         let particles = [];
         let step = 0;
 
         const story = [
-            "Selamat ulang tahun untuk sosok luar biasa yang kehadirannya selalu memberikan warna tersendiri di hidupku dan orang-orang sekitarmu.",
-            "Terima kasih sudah menjadi pribadi yang hebat, tetap kuat melewati banyak hal, dan selalu berusaha memberikan yang terbaik setiap harinya.",
+            "Hai... Ada sesuatu yang mau gue kasih tau ke lo.",
+            "Sebenernya, setiap hari yang gue lewati bareng lo itu berharga banget...",
             "Makasih ya udah selalu ada dan bikin hari-hari gue jadi lebih berwarna.",
             "Semoga kejutan kecil ini bisa bikin lo senyum hari ini. Siap?"
         ];
+
+        // Logika Pemuatan Foto
+        if (linkFotoPaduka !== "") {
+            fotoUtama.src = linkFotoPaduka;
+            fotoUtama.onload = () => { fallback.style.display = "none"; };
+            fotoUtama.onerror = () => { 
+                console.log("Link foto bermasalah, menggunakan fallback");
+                fallback.style.display = "block";
+                fotoUtama.style.display = "none";
+            };
+        }
 
         function typeWriter(text, i, fnCallback) {
             if (i < text.length) {
@@ -91,10 +124,10 @@
 
         function nextStep() {
             if (step < story.length) {
+                nextBtn.style.display = "none";
                 typeWriter(story[step], 0, () => {
                     nextBtn.style.display = "inline-block";
                 });
-                nextBtn.style.display = "none";
                 step++;
             } else {
                 textElement.innerHTML = "Klik tombol di bawah dan gerakin jari lo di layar! 💞";
@@ -106,59 +139,76 @@
         }
 
         function finalCelebration() {
-            audio.play();
+            audio.play().catch(e => console.log("Audio play fail"));
             const rect = nextBtn.getBoundingClientRect();
             createExplosion(rect.left + rect.width / 2, rect.top + rect.height / 2);
-            nextBtn.innerText = "YEAAYYYYY! 🎆";
+            setTimeout(() => createExplosion(Math.random()*canvas.width, Math.random()*canvas.height*0.5), 200);
+            nextBtn.innerText = "YAY! 🎆";
         }
 
         nextBtn.onclick = nextStep;
         window.onload = nextStep;
 
+        // --- SISTEM PARTIKEL (🦋, 💞, 🌸) ---
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
         class Particle {
             constructor(x, y, isBurst, type = 'lily') {
                 this.x = x; this.y = y; this.isBurst = isBurst; this.type = type;
-                const angle = Math.random() * Math.PI * 2;
-                const force = Math.random() * 4 + 2;
-                this.vx = Math.cos(angle) * force;
-                this.vy = Math.sin(angle) * force;
-                this.life = 1;
-                this.decay = 0.02;
-                this.size = Math.random() * 20 + 20;
-                this.emoji = type === 'heart' ? '💞' : '🌸';
+                if (isBurst) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const force = Math.random() * 4 + 2; 
+                    this.vx = Math.cos(angle) * force; this.vy = Math.sin(angle) * force;
+                    this.life = 1; this.decay = Math.random() * 0.01 + 0.005; this.size = Math.random() * 20 + 20;
+                } else if (type === 'trail') {
+                    this.vx = (Math.random() - 0.5) * 2; this.vy = (Math.random() - 0.5) * 2;
+                    this.life = 1; this.decay = 0.035; this.size = Math.random() * 15 + 10;
+                } else {
+                    this.vx = (Math.random() - 0.5) * 2; this.vy = Math.random() * 2 + 1;
+                    this.life = 1; this.decay = 0; this.size = Math.random() * 15 + 15;
+                }
+                this.rotation = Math.random() * Math.PI * 2; this.spin = (Math.random() - 0.5) * 0.1;
+                this.emoji = type === 'heart' ? '💞' : (type === 'trail' ? '🦋' : '🌸');
             }
             draw() {
-                ctx.save();
-                ctx.globalAlpha = this.life;
-                ctx.font = ${this.size}px serif;
-                ctx.fillText(this.emoji, this.x, this.y);
-                ctx.restore();
+                ctx.save(); ctx.globalAlpha = this.life; ctx.translate(this.x, this.y); ctx.rotate(this.rotation);
+                ctx.font = `${this.size}px serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(this.emoji, 0, 0); ctx.restore();
             }
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.vy += 0.2;
-                this.life -= this.decay;
+                this.x += this.vx; this.y += this.vy;
+                if (this.isBurst || this.type === 'trail') { if(this.isBurst) this.vy += 0.22; this.life -= this.decay; }
+                else { if (this.y > canvas.height + 30) this.y = -30; }
+                this.rotation += this.spin;
             }
         }
 
         function createExplosion(x, y) {
-            for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, true));
+            for (let i = 0; i < 25; i++) particles.push(new Particle(x, y, true, 'lily'));
+            for (let i = 0; i < 15; i++) particles.push(new Particle(x, y, true, 'heart'));
         }
 
         function loop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
-                p.update();
-                p.draw();
-                if (p.life <= 0) particles.splice(i, 1);
-            });
+            particles.forEach((p, i) => { p.update(); p.draw(); if ((p.isBurst || p.type === 'trail') && p.life <= 0) particles.splice(i, 1); });
             requestAnimationFrame(loop);
         }
         loop();
+
+        const handleMove = (e) => {
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+            if (x && y) particles.push(new Particle(x, y, false, 'trail'));
+        };
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchmove', handleMove, {passive: false});
+
+        setInterval(() => {
+            if (particles.filter(p => !p.isBurst && p.type === 'lily').length < 20) {
+                particles.push(new Particle(Math.random()*canvas.width, -30, false, 'lily'));
+            }
+        }, 1000);
     </script>
 </body>
 </html>
