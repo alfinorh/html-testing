@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lily & Love Celebration - Princess Birthdayyy!!!</title>
+    <title>Lily & love celebration - Princess Birthdayy!!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff5f8; font-family: 'Poppins', sans-serif; touch-action: none; }
@@ -11,38 +11,31 @@
         .container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; z-index: 10; }
         
         .card { 
-            background: rgba(255, 255, 255, 0.98); 
+            background: rgba(255, 255, 255, 0.95); 
             padding: 30px; 
             border-radius: 30px; 
             box-shadow: 0 15px 50px rgba(255, 77, 109, 0.2); 
             text-align: center; 
-            width: 280px; 
+            width: 300px; 
             border: 2px solid #ffcad4; 
             backdrop-filter: blur(10px);
+            transition: all 0.8s ease;
         }
 
-        /* STYLING FOTO BULAT */
-        .photo-wrap { 
+        /* STYLING FOTO BULAT PADUKA RAJA */
+        .photo-container { 
             width: 120px; 
             height: 120px; 
             margin: 0 auto 15px auto; 
             border-radius: 50%; 
             border: 4px solid #ff9a9e; 
             overflow: hidden; 
-            display: none; /* Akan muncul di akhir alur */
+            display: none; 
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
-            background: #fff;
-            position: relative;
+            background-color: #ffeef2;
         }
-
-        .photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Fallback jika foto belum diganti */
-        .photo-fallback {
-            font-size: 60px;
-            line-height: 120px;
-        }
-
         h1 { font-family: 'Dancing Script', cursive; color: #ff4d6d; margin: 0; font-size: 30px; display: none; }
         #typewriter { color: #888; font-size: 14px; min-height: 60px; margin: 20px 0; line-height: 1.6; }
         
@@ -58,18 +51,18 @@
 <body>
 
     <audio id="myAudio" preload="auto" loop>
-        <source src="https://small-lavender-l3xxi3rhoj.edgeone.app/ssstik.io_1775366708859.mp3" type="audio/mpeg">
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rainy-Day-Lofi-Chill-Medium.mp3" type="audio/mpeg">
     </audio>
 
     <canvas id="canvas"></canvas>
 
     <div class="container">
         <div class="card" id="mainCard">
-            <h1 id="mainTitle">Special for Princess 💞</h1>
+            <h1 id="mainTitle">Special for You ⚜️</h1>
             
-            <div class="photo-wrap" id="photoBox">
-                <img src="https://drive.google.com/file/d/1BGCf8uxwHSWGcPkD2sdqqGYzGCx3ONkf/view?usp=sharing" id="fotoUtama" alt="">
-                <div id="fallback" class="photo-fallback">⚜️</div>
+            <!-- FOTO LOKAL - DARI PUBLIC FOLDER -->
+            <div class="photo-container" id="photoBox">
+                <img src="image.jpeg" id="fotoUtama" alt="Surprise">
             </div>
             
             <div id="typewriter"></div>
@@ -78,10 +71,6 @@
     </div>
 
     <script>
-        // --- KONFIGURASI ---
-        // MASUKKAN LINK FOTO DI ANTARA TANDA KUTIP DI BAWAH INI
-        const linkFoto = "3d-animation-character-cartoon-113255-10628"; 
-
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const nextBtn = document.getElementById('nextBtn');
@@ -90,7 +79,6 @@
         const photoBox = document.getElementById('photoBox');
         const mainTitle = document.getElementById('mainTitle');
         const fotoUtama = document.getElementById('fotoUtama');
-        const fallback = document.getElementById('fallback');
         
         let particles = [];
         let step = 0;
@@ -102,16 +90,11 @@
             "Semoga kejutan kecil ini bisa bikin lo senyum hari ini. Siap?"
         ];
 
-        // Logika Pemuatan Foto
-        if (linkFoto !== "") {
-            fotoUtama.src = linkFoto;
-            fotoUtama.onload = () => { fallback.style.display = "none"; };
-            fotoUtama.onerror = () => { 
-                console.log("Link foto bermasalah, menggunakan fallback");
-                fallback.style.display = "block";
-                fotoUtama.style.display = "none";
-            };
-        }
+        // Pastikan foto ter-load sebelum ditampilkan
+        fotoUtama.onerror = function() {
+            // Jika link mati, ganti ke emoji lily sebagai fallback
+            this.src = "https://img.icons8.com/emoji/96/lily-emoji.png";
+        };
 
         function typeWriter(text, i, fnCallback) {
             if (i < text.length) {
@@ -139,17 +122,17 @@
         }
 
         function finalCelebration() {
-            audio.play().catch(e => console.log("Audio play fail"));
+            audio.play().catch(e => console.log("Musik butuh klik"));
             const rect = nextBtn.getBoundingClientRect();
             createExplosion(rect.left + rect.width / 2, rect.top + rect.height / 2);
             setTimeout(() => createExplosion(Math.random()*canvas.width, Math.random()*canvas.height*0.5), 200);
-            nextBtn.innerText = "YEAYYYYY!! 🎆";
+            nextBtn.innerText = "YEAYYYYYY! 🎆";
         }
 
         nextBtn.onclick = nextStep;
         window.onload = nextStep;
 
-        // --- SISTEM PARTIKEL (🦋, 💞, 🌸) ---
+        // --- SISTEM PARTIKEL (Lily 🌸, Heart 💞, Trail 🦋) ---
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
@@ -169,11 +152,11 @@
                     this.life = 1; this.decay = 0; this.size = Math.random() * 15 + 15;
                 }
                 this.rotation = Math.random() * Math.PI * 2; this.spin = (Math.random() - 0.5) * 0.1;
-                this.emoji = type === 'heart' ? '💞' : (type === 'trail' ? '🦋' : '🌸');
+                this.emoji = type === 'heart' ? '💞' : (type === 'trail' ? 🦋 : '🌸');
             }
             draw() {
                 ctx.save(); ctx.globalAlpha = this.life; ctx.translate(this.x, this.y); ctx.rotate(this.rotation);
-                ctx.font = `${this.size}px serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.font = ${this.size}px serif; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
                 ctx.fillText(this.emoji, 0, 0); ctx.restore();
             }
             update() {
